@@ -8,6 +8,7 @@ package facades;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
 import entities.Person;
+import exceptions.PersonNotFoundException;
 import facades.IPersonFacade;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -51,14 +52,18 @@ private static PersonFacade instance;
     
 
     @Override
-    public PersonDTO deletePerson(int id) {
+    public PersonDTO deletePerson(int id) throws PersonNotFoundException{
         EntityManager em = emf.createEntityManager();
-        
+        Person p1 = em.find(Person.class, id);
+        if(p1!=null){
             em.getTransaction().begin();
-            Person p1 = em.find(Person.class, id);
             
             em.remove(p1);
             em.getTransaction().commit();
+        }else{
+            throw new PersonNotFoundException("{\"message\": \"Could not delete, provided id does not exist\"}");
+        }
+            
             em.close();
             return new PersonDTO(p1);
     }
@@ -67,16 +72,21 @@ private static PersonFacade instance;
     
 
     @Override
-    public PersonDTO getPerson(int id) {
+    public PersonDTO getPerson(int id) throws PersonNotFoundException{
      EntityManager em = emf.createEntityManager();
         try{
             Person p = em.find(Person.class,id);
-            
-            PersonDTO dto= new PersonDTO(p.getfName(),p.getlName(),p.getPhone());
+            if(p!=null){
+                PersonDTO dto= new PersonDTO(p.getfName(),p.getlName(),p.getPhone());
             return dto;
+            }else{
+                throw new PersonNotFoundException("{\"message\": \"No person with provided id found\"}");
+            }
+            
         }finally {
             em.close();
-        }}
+        }
+}
 
 
     @Override
@@ -95,18 +105,23 @@ private static PersonFacade instance;
     
 
     @Override
-    public PersonDTO editPerson(PersonDTO p) {
+    public PersonDTO editPerson(PersonDTO p) throws PersonNotFoundException {
         
         EntityManager em = emf.createEntityManager();
         Person person= em.find(Person.class, p.getId());
 
         try{                        
-            em.getTransaction().begin();
+            if(person!=null){
+               em.getTransaction().begin();
             person.setfName(p.getfName());
             person.setlName(p.getlName());
             person.setPhone(p.getPhone());
             person.setLastEdited();
-            em.getTransaction().commit();
+            em.getTransaction().commit(); 
+            }else{
+                throw new PersonNotFoundException("{\"message\": \"No person with provided id found so we could not edit him\"}");
+            }
+            
             
             
         }finally {

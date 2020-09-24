@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
+import exceptions.PersonNotFoundException;
 import facades.PersonFacade;
 import utils.EMF_Creator;
 
@@ -35,7 +36,7 @@ public class PersonRessource {
     @Path("id/{id}")
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public String id(@PathParam("id")int id) {
+    public String id(@PathParam("id")int id) throws PersonNotFoundException {
         
         PersonDTO dto =FACADE.getPerson(id);
         
@@ -67,7 +68,7 @@ public class PersonRessource {
     @DELETE
     @Path("delete/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String deleteById(@PathParam("id")int id){
+    public String deleteById(@PathParam("id")int id) throws PersonNotFoundException{
         PersonDTO dto=FACADE.deletePerson(id);
         return GSON.toJson(dto);
     }
@@ -77,7 +78,7 @@ public class PersonRessource {
     @Path("update/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     @Consumes({MediaType.APPLICATION_JSON})
-    public String updateById(@PathParam("id")int id, String person){
+    public String updateById(@PathParam("id")int id, String person) throws PersonNotFoundException{
         PersonDTO pDTO = GSON.fromJson(person, PersonDTO.class);
         pDTO.setId(id);
         PersonDTO p=FACADE.editPerson(pDTO);
