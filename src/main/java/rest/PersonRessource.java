@@ -60,7 +60,7 @@ public class PersonRessource {
     public Response addPerson(String person) {
         
         PersonDTO personDTO = GSON.fromJson(person, PersonDTO.class);        
-        PersonDTO p= FACADE.addPerson(personDTO.getfName(),personDTO.getlName(),personDTO.getPhone());        
+        PersonDTO p= FACADE.addPerson(personDTO.getfName(),personDTO.getlName(),personDTO.getPhone(), personDTO.getStreet(),personDTO.getZip() , personDTO.getCity());        
         return Response.ok(p).build();
         
     }

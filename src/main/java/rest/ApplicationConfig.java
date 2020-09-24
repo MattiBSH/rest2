@@ -24,7 +24,6 @@ public class ApplicationConfig extends Application {
         resources.add(exceptions.PersonNotFoundExceptionMapper.class);
         resources.add(org.glassfish.jersey.server.wadl.internal.WadlResource.class);
         resources.add(rest.PersonRessource.class);
-        resources.add(rest.TestResource.class);
     }
     
 }

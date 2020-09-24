@@ -5,6 +5,7 @@
  */
 package facades;
 
+import entities.Address;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
 
@@ -15,8 +16,7 @@ public class Hmm {
        private static final PersonFacade FACADE =  PersonFacade.getFacade(EMF);
 
     public static void main(String[] args) {
-        FACADE.addPerson("Matti", "Hansen", "60606060");
-        FACADE.addPerson("BOB", "Hansen", "60606060");
-        FACADE.addPerson("Shalaman", "Hansen", "60606060");
+        Address a = new Address("elle","1212","ballerup");
+        
     }
 }

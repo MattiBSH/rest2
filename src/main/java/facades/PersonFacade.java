@@ -7,6 +7,7 @@ package facades;
 
 import dtos.PersonDTO;
 import dtos.PersonsDTO;
+import entities.Address;
 import entities.Person;
 import exceptions.PersonNotFoundException;
 import facades.IPersonFacade;
@@ -32,15 +33,17 @@ private static PersonFacade instance;
         return instance;
     }
     @Override
-    public PersonDTO addPerson(String fName, String lName, String phone) {
+    public PersonDTO addPerson(String fName, String lName, String phone, String street, String zip, String city) {
 
         Person person = new Person(fName,lName,phone);
+        Address a = new Address(street,zip,city);
+        person.setAddress(a);
         EntityManager em = emf.createEntityManager();
         
             em.getTransaction().begin();
             em.persist(person);
             em.getTransaction().commit();
-            PersonDTO personDTO = new PersonDTO(fName,lName,phone);
+            PersonDTO personDTO = new PersonDTO(person);
             em.close();
             return personDTO;
         
@@ -59,6 +62,7 @@ private static PersonFacade instance;
             em.getTransaction().begin();
             
             em.remove(p1);
+            em.remove(p1.getAddress());
             em.getTransaction().commit();
         }else{
             throw new PersonNotFoundException("{\"message\": \"Could not delete, provided id does not exist\"}");
@@ -117,6 +121,9 @@ private static PersonFacade instance;
             person.setlName(p.getlName());
             person.setPhone(p.getPhone());
             person.setLastEdited();
+            person.getAddress().setStreet(p.getStreet());
+            person.getAddress().setZip(p.getZip());
+            person.getAddress().setCity(p.getCity());
             em.getTransaction().commit(); 
             }else{
                 throw new PersonNotFoundException("{\"message\": \"No person with provided id found so we could not edit him\"}");
