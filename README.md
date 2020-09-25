@@ -5,3 +5,6 @@ Så part 1 uden rød, part 2 uden rød og part 3 uden rød.
 
 link til start rep
 https://github.com/MattiBSH/flow2week1
+
+
+Har virkelig gjort alt hvad jeg kan, men der er bare ikke nok tid...
