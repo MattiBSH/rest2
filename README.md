@@ -6,7 +6,7 @@ Jeg har ikke lavet alle rest test(var ikke sikker på om det var et krav), men h
 Så part 1 uden rød, part 2 uden rød og part 3 uden rød.
 
 
-link til start rep
+link tilbage til det andet rep
 https://github.com/MattiBSH/flow2week1
 
 
