@@ -94,14 +94,19 @@ private static PersonFacade instance;
 
 
     @Override
-    public PersonsDTO getAllPersons() {
+    public PersonsDTO getAllPersons() throws PersonNotFoundException{
         
          EntityManager em = emf.createEntityManager();
         try{
             TypedQuery<Person> query = 
                        em.createQuery("Select p from Person p",Person.class);
-            PersonsDTO dto= new PersonsDTO(query.getResultList());
-            return dto;
+            if(query==null){
+                throw new PersonNotFoundException("{\"message\": \"No one in here mate\"}");
+            }else{
+               PersonsDTO dto= new PersonsDTO(query.getResultList());
+            return dto; 
+            }
+            
         }finally {
             em.close();
         }}

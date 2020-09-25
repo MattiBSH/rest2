@@ -6,6 +6,8 @@
 package facades;
 
 import entities.Address;
+import entities.Person;
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import utils.EMF_Creator;
 
@@ -16,7 +18,22 @@ public class Hmm {
        private static final PersonFacade FACADE =  PersonFacade.getFacade(EMF);
 
     public static void main(String[] args) {
-        Address a = new Address("elle","1212","ballerup");
+        EntityManager em = EMF.createEntityManager();
+        //facade=GroupMemberFacade.getGMPFacade(emf);
+
         
-    }
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE from Person").executeUpdate();
+            em.createQuery("DELETE from Address").executeUpdate();
+            Person p = new Person("Matti","Hansen","60606060");
+            Address address=new Address("elle","2982","ballerup");
+            p.setAddress(address);
+            em.persist(p);
+             
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+}
 }

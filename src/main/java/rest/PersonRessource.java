@@ -31,7 +31,18 @@ public class PersonRessource {
     
     private static final PersonFacade FACADE =  PersonFacade.getFacade(EMF);
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-            
+        
+
+
+    @GET
+    @Produces({MediaType.TEXT_PLAIN})
+    public String isUp() {
+        
+        
+        
+        return "yes";
+        
+    }
     
     @Path("id/{id}")
     @GET
@@ -45,11 +56,11 @@ public class PersonRessource {
     }
     @Path("all")
     @GET
-    @Produces({MediaType.APPLICATION_JSON})
-    public String getPersons() {
+    @Produces({MediaType.TEXT_PLAIN})
+    public String getPersons() throws PersonNotFoundException {
         
-        PersonsDTO dto =FACADE.getAllPersons();
-        
+       PersonsDTO dto =FACADE.getAllPersons();
+       
         return GSON.toJson(dto);
         
     }

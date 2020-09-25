@@ -22,6 +22,10 @@ public class PersonsDTO {
             all.add(new PersonDTO(p));
         });
     }
+
+    public List<PersonDTO> getAll() {
+        return all;
+    }
     
 }
 

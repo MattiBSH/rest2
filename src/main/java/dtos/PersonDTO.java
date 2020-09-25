@@ -21,9 +21,9 @@ public class PersonDTO {
         this.id=p.getId();
         this.city=p.getAddress().getCity();
         this.zip=p.getAddress().getZip();
-        this.street=p.getAddress().getStreet();
-        
+        this.street=p.getAddress().getStreet(); 
     }
+    
     public PersonDTO(String fn,String ln, String phone) {
         this.fName = fn;
         this.lName = ln;
